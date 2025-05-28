@@ -1069,6 +1069,6 @@ C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0
 C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\refint\FitnessTrackerApp.dll
 C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\FitnessTrackerApp.pdb
 C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\ref\FitnessTrackerApp.dll
-C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\compressed\gq23cpgzt7-tvsqpppiqn.gz
-C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\compressed\zwcito1gfe-3wq24uocwk.gz
-C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\compressed\g0iz73sqj2-2b0dkiu99s.gz
+C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\compressed\gq23cpgzt7-jacoq88mr6.gz
+C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\compressed\zwcito1gfe-00o4hkgg6g.gz
+C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\compressed\g0iz73sqj2-ynydrc9a57.gz

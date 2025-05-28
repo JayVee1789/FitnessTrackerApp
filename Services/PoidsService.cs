@@ -12,6 +12,8 @@ namespace FitnessTrackerApp.Services
         private readonly ILocalStorageService _localStorage;
         private const string EntriesKey = "poids_entries";
         private const string ExercicesKey = "exercise_list";
+        private List<string> exercices = new();
+        private List<PoidsEntry> poids = new();
         public PoidsService(ILocalStorageService localStorage)
         {
             _localStorage = localStorage;
@@ -60,10 +62,15 @@ namespace FitnessTrackerApp.Services
 
         public async Task<List<string>> GetExercicesAsync()
         {
-            return await _localStorage.GetItemAsync<List<string>>(ExercicesKey) ?? new()
-        {
-            "Développé couché", "Dips", "Squat"
-        };
+            var list = await _localStorage.GetItemAsync<List<string>>(ExercicesKey);
+
+            if (list == null || list.Count == 0)
+            {
+                list = new() { "Développé couché", "Dips", "Squat" };
+                await _localStorage.SetItemAsync(ExercicesKey, list);
+            }
+
+            return list;
         }
 
         //  Sauvegarder la liste des exercices
@@ -77,6 +84,14 @@ namespace FitnessTrackerApp.Services
             entries.RemoveAll(e => e.Id == id);
             await _localStorage.SetItemAsync("poids_entries", entries);
         }
-
+        public async Task<List<string>> GetExercicesFromEntriesAsync()
+        {
+            var entries = await GetEntriesAsync();
+            return entries
+                .Select(e => e.Exercice)
+                .Distinct()
+                .OrderBy(x => x)
+                .ToList();
+        }
     }
 }

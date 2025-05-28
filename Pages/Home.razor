@@ -31,6 +31,7 @@
             <div class="col-md-4">
                 <label class="form-label">Exercice</label>
                 <select class="form-select" @bind="selectedExercice">
+                    <option disabled selected value="">-- Choisir un exercice --</option>
                     @foreach (var ex in exercices)
                     {
                         <option value="@ex">@ex</option>
@@ -119,7 +120,8 @@
             <div class="col-md-6">
                 <label class="form-label">Supprimer un exercice</label>
                 <div class="input-group">
-                    <select class="form-select" @bind="selectedExerciceToDelete">
+                    <select class="form-select" @bind="selectedExercice">
+                        <option disabled selected value="">-- Choisir un exercice --</option>
                         @foreach (var ex in exercices)
                         {
                             <option value="@ex">@ex</option>
@@ -159,26 +161,31 @@
 
 @code {
     List<string> exercices = new();
-    string selectedExercice = "";
-    string newExercice = "";
-    DateTime selectedDate = DateTime.Today;
-    double poids;
-
     List<PoidsEntry> data = new();
     List<DateTime> allDates = new();
 
+    string selectedExercice = "";
     string selectedExerciceToDelete = "";
+    string newExercice = "";
+    DateTime selectedDate = DateTime.Today;
     DateTime selectedDateToDelete = DateTime.Today;
-
+    double poids;
+    string selectedUnite = "kg";
     string message = "";
-
-    string selectedUnite = "kg"; // valeur par défaut
 
     protected override async Task OnInitializedAsync()
     {
-        exercices = await PoidsService.GetExercicesAsync();
-        selectedExercice = exercices.FirstOrDefault() ?? "";
         data = await PoidsService.GetEntriesAsync();
+        var exercicesLocaux = await PoidsService.GetExercicesAsync();
+        var exercicesDepuisPoids = data.Select(e => e.Exercice);
+
+        exercices = exercicesLocaux
+            .Union(exercicesDepuisPoids)
+            .Distinct()
+            .OrderBy(x => x)
+            .ToList();
+
+        selectedExercice = exercices.FirstOrDefault() ?? "";
         UpdateDates();
     }
 
@@ -203,50 +210,53 @@
                 Poids = poidsKg
             };
 
-         await PoidsService.AddEntryAsync(entry);
-               
+        await PoidsService.AddEntryAsync(entry);
         data = await PoidsService.GetEntriesAsync();
-        exercices = data.Select(e => e.Exercice).Distinct().OrderBy(x => x).ToList();
         UpdateDates();
+
+        exercices = exercices
+            .Union(data.Select(e => e.Exercice))
+            .Distinct()
+            .OrderBy(x => x)
+            .ToList();
+
         message = "Entrée enregistrée ✅";
     }
 
-    async Task DeleteEntry(string exercice, DateTime date)
+    async Task DeleteById(Guid id)
     {
-        await PoidsService.RemoveEntryAsync(exercice, date);
+        var entry = data.FirstOrDefault(e => e.Id == id);
+        if (entry is null) return;
+
+        await PoidsService.RemoveByIdAsync(id);
+        await SupabaseService.DeleteByExerciceAndDateAsync(entry.Exercice, entry.Date);
+
         data = await PoidsService.GetEntriesAsync();
         UpdateDates();
-        message = $"Supprimé : {exercice} - {date:dd MMM}";
+
+        exercices = exercices
+            .Union(data.Select(e => e.Exercice))
+            .Distinct()
+            .OrderBy(x => x)
+            .ToList();
+
+        message = "Entrée supprimée (local + Supabase) ✅";
     }
 
     async Task DeleteExercice()
     {
         exercices.Remove(selectedExerciceToDelete);
-        await PoidsService.SaveExercicesAsync(exercices); // sauvegarde la liste mise à jour
+        await PoidsService.SaveExercicesAsync(exercices);
 
         selectedExerciceToDelete = exercices.FirstOrDefault() ?? "";
+
+        exercices = exercices
+            .Union(data.Select(e => e.Exercice))
+            .Distinct()
+            .OrderBy(x => x)
+            .ToList();
+
         message = $"Exercice supprimé de la liste déroulante : {selectedExerciceToDelete}";
-    }
-
-
-    async Task DeleteDate()
-    {
-        await PoidsService.RemoveDateAsync(selectedDateToDelete);
-        data = await PoidsService.GetEntriesAsync();
-        UpdateDates();
-        message = $"Date supprimée : {selectedDateToDelete:dd MMM yyyy}";
-    }
-
-    void UpdateDates()
-    {
-        allDates = data.Select(e => e.Date.Date).Distinct().OrderBy(d => d).ToList();
-    }
-    async Task DeleteEntriesForExercice(string exercice)
-    {
-        await PoidsService.RemoveEntriesForExerciceAsync(exercice);
-        data = await PoidsService.GetEntriesAsync();
-        UpdateDates();
-        message = $"Toutes les entrées pour « {exercice} » ont été supprimées.";
     }
 
     async Task ExportToSupabase()
@@ -255,7 +265,6 @@
         var remote = await SupabaseService.GetEntriesAsync();
         int added = 0;
 
-        // Supprimer ce qui n'existe plus en local
         await SupabaseService.DeleteEntriesNotInAsync(local);
 
         foreach (var entry in local)
@@ -276,19 +285,51 @@
         await PoidsService.OverwriteEntriesAsync(supabaseEntries);
         data = await PoidsService.GetEntriesAsync();
         UpdateDates();
+
+        exercices = exercices
+            .Union(data.Select(e => e.Exercice))
+            .Distinct()
+            .OrderBy(x => x)
+            .ToList();
+
         message = $"Importé {supabaseEntries.Count} entrées depuis Supabase ✅";
     }
-    async Task DeleteById(Guid id)
+
+    async Task DeleteEntriesForExercice(string exercice)
     {
-        var entry = data.FirstOrDefault(e => e.Id == id);
-        if (entry is null) return;
-
-        await PoidsService.RemoveByIdAsync(id);
-        await SupabaseService.DeleteByExerciceAndDateAsync(entry.Exercice, entry.Date);
-
+        await PoidsService.RemoveEntriesForExerciceAsync(exercice);
         data = await PoidsService.GetEntriesAsync();
         UpdateDates();
-        message = "Entrée supprimée (local + Supabase) ✅";
+
+        exercices = exercices
+            .Union(data.Select(e => e.Exercice))
+            .Distinct()
+            .OrderBy(x => x)
+            .ToList();
+
+        message = $"Toutes les entrées pour « {exercice} » ont été supprimées.";
     }
+
+    async Task DeleteDate()
+    {
+        await PoidsService.RemoveDateAsync(selectedDateToDelete);
+        data = await PoidsService.GetEntriesAsync();
+        UpdateDates();
+
+        exercices = exercices
+            .Union(data.Select(e => e.Exercice))
+            .Distinct()
+            .OrderBy(x => x)
+            .ToList();
+
+        message = $"Date supprimée : {selectedDateToDelete:dd MMM yyyy}";
+    }
+
+    void UpdateDates()
+    {
+        allDates = data.Select(e => e.Date.Date).Distinct().OrderBy(d => d).ToList();
+    }
+}
+
 
 }

@@ -6,24 +6,27 @@ using Blazored.LocalStorage;
 using FitnessTrackerApp.Models;
 using System.Net.Http.Json;
 
-
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
+// === Enregistrement des services ===
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<PoidsService>();
 builder.Services.AddHttpClient<SupabaseService>();
 builder.Services.AddSingleton<UpdateService>();
-//var settings = await builder.Services
-//    .BuildServiceProvider()
-//    .GetRequiredService<HttpClient>()
-//    .GetFromJsonAsync<SupabaseSettings>("settings.json");
-
-//builder.Services.AddSingleton(settings);
-
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+// === Chargement des settings Supabase ===
 var httpClient = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
 var settings = await httpClient.GetFromJsonAsync<SupabaseSettings>("settings.json") ?? new SupabaseSettings();
 builder.Services.AddSingleton(settings);
-await builder.Build().RunAsync();
+
+// === Build & Initialisation ===
+var host = builder.Build();
+
+// Initialiser localStorage si vide (doit se faire après le build)
+var poidsService = host.Services.GetRequiredService<PoidsService>();
+await poidsService.GetExercicesAsync(); // force l'init si pas fait
+
+await host.RunAsync();
