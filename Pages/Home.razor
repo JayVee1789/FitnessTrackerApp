@@ -5,65 +5,113 @@
 @inject PoidsService PoidsService
 @inject SupabaseService SupabaseService
 
-<div class="container mt-4">
-    <h3 class="mb-4">Journal de Musculation 💪</h3>
+<div class="container py-5">
+    <h2 class="fw-bold mb-4 text-center">Journal de Musculation 💪</h2>
 
     @if (!string.IsNullOrWhiteSpace(message))
     {
-        <div class="alert alert-info">@message</div>
+        <div class="alert alert-success text-center">@message</div>
     }
 
-    <div class="row mb-3">
-        <div class="col-md-4 mb-2">
-            <label class="form-label">Exercice</label>
-            <select class="form-select" @bind="selectedExercice">
-                @foreach (var ex in exercices)
-                {
-                    <option value="@ex">@ex</option>
-                }
-            </select>
+    <div class="card shadow-sm p-4 mb-5">
+        <h5 class="mb-3">Ajouter une séance</h5>
+
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">Exercice</label>
+                <select class="form-select" @bind="selectedExercice">
+                    @foreach (var ex in exercices)
+                    {
+                        <option value="@ex">@ex</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Nouveau exercice</label>
+                <input class="form-control" placeholder="ex: Tractions" @bind="newExercice" />
+            </div>
+
+            <div class="col-md-4 d-flex align-items-end">
+                <button class="btn btn-outline-dark w-100" @onclick="AddExercice">➕ Ajouter</button>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Date</label>
+                <input type="date" class="form-control" @bind="selectedDate" />
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Poids</label>
+                <input type="number" class="form-control" @bind="poids" placeholder="ex: 50" />
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Unité</label>
+                <select class="form-select" @bind="selectedUnite">
+                    <option value="kg">kg</option>
+                    <option value="lb">lb</option>
+                </select>
+            </div>
         </div>
 
-        <div class="col-md-4 mb-2">
-            <label class="form-label">Ajouter un nouvel exercice</label>
-            <input class="form-control" @bind="newExercice" placeholder="Nouveau exercice" />
-        </div>
-
-        <div class="col-md-4 mb-2 d-flex align-items-end">
-            <button class="btn btn-outline-secondary w-100" @onclick="AddExercice">Ajouter</button>
-        </div>
+        <button class="btn btn-primary mt-4 w-100" @onclick="AddEntry">💾 Enregistrer</button>
     </div>
 
-    <div class="row mb-3">
-        <div class="col-md-4">
-            <label class="form-label">Date</label>
-            <input class="form-control" type="date" @bind="selectedDate" />
-        </div>
-        <div class="col-md-4">
-            <label class="form-label">Poids</label>
-            <input class="form-control" type="number" @bind="poids" />
-        </div>
-        <div class="col-md-4">
-            <label class="form-label">Unité</label>
-            <select class="form-select" @bind="selectedUnite">
-                <option value="kg">kg</option>
-                <option value="lb">lb</option>
-            </select>
-        </div>
-    </div>
-
-    <button class="btn btn-primary w-100 mb-4" @onclick="AddEntry">Enregistrer</button>
-
-    <div class="d-flex gap-2 my-3">
-        <button class="btn btn-outline-primary" @onclick="ExportToSupabase">Exporter vers Supabase</button>
-        <button class="btn btn-outline-secondary" @onclick="ImportFromSupabase">Importer depuis Supabase</button>
+    <div class="d-flex flex-wrap gap-2 justify-content-center mb-4">
+        <button class="btn btn-outline-primary" @onclick="ExportToSupabase">📤 Exporter vers Supabase</button>
+        <button class="btn btn-outline-secondary" @onclick="ImportFromSupabase">📥 Importer depuis Supabase</button>
     </div>
 
     @if (data.Count > 0)
     {
-        <h4 class="mb-3">Historique</h4>
+        <div class="card shadow-sm p-4 mb-4">
+            <h5 class="mb-3">Historique des poids</h5>
 
-        <div class="row mb-3">
+            <div class="table-responsive">
+                <table class="table table-hover text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>Exercice</th>
+                        @foreach (var date in allDates)
+                        {
+                            <th>@date.ToString("dd MMM")</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var group in data.GroupBy(e => e.Exercice))
+                    {
+                        <tr>
+                            <td class="fw-bold">@group.Key</td>
+                            @foreach (var date in allDates)
+                            {
+                                var match = group.FirstOrDefault(e => e.Date.Date == date.Date);
+                                <td>
+                                    @if (match != null)
+                                    {
+                                        double displayedPoids = selectedUnite == "lb" ? match.Poids / 0.453592 : match.Poids;
+                                        string suffix = selectedUnite == "lb" ? "lb" : "kg";
+                                        <div>@Math.Round(displayedPoids, 1) @suffix</div>
+                                        <button class="btn btn-sm btn-outline-danger"
+                                                @onclick="@(() => DeleteById(match.Id))">
+                                            ✖
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">-</span>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-4">
             <div class="col-md-6">
                 <label class="form-label">Supprimer un exercice</label>
                 <div class="input-group">
@@ -77,7 +125,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+           @*  <div class="col-md-6">
                 <label class="form-label">Supprimer une date</label>
                 <div class="input-group">
                     <select class="form-select" @bind="selectedDateToDelete">
@@ -88,50 +136,10 @@
                     </select>
                     <button class="btn btn-danger" @onclick="DeleteDate">🗑️</button>
                 </div>
-            </div>
+            </div> *@
         </div>
 
-        <table class="table table-bordered table-sm text-center">
-            <thead class="table-light">
-                <tr>
-                    <th>Exercice</th>
-                    @foreach (var date in allDates)
-                    {
-                        <th>@date.ToString("dd MMM")</th>
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var ex in data.GroupBy(e => e.Exercice))
-                {
-                    <tr>
-                        <td class="fw-bold">@ex.Key</td>
-                        @foreach (var date in allDates)
-                        {
-                            var match = ex.FirstOrDefault(e => e.Date.Date == date.Date);
-                            <td>
-                                @if (match != null)
-                                {
-                                    double displayedPoids = selectedUnite == "lb" ? match.Poids / 0.453592 : match.Poids;
-                                    string suffix = selectedUnite == "lb" ? "lb" : "kg";
-                                    <div>@Math.Round(displayedPoids, 1) @suffix</div>
-                                    <button class="btn btn-sm btn-outline-danger"
-                                            @onclick="@(() => DeleteById(match.Id))">
-                                        ❌
-                                    </button>
-                                }
-                                else
-                                {
-                                    <div>-</div>
-                                }
-                            </td>
-                        }
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-        <h5 class="mt-4">Supprimer toutes les entrées d’un exercice</h5>
+        @* <h6 class="mt-4 mb-2">Supprimer toutes les entrées par exercice</h6>
         <div class="d-flex flex-wrap gap-2">
             @foreach (var ex in data.Select(e => e.Exercice).Distinct())
             {
@@ -140,9 +148,10 @@
                     🗑️ @ex
                 </button>
             }
-        </div>
+        </div> *@
     }
 </div>
+
 
 @code {
     List<string> exercices = new();
@@ -187,11 +196,13 @@
             {
                 Exercice = selectedExercice,
                 Date = selectedDate,
-                Poids = poids
+                Poids = poidsKg
             };
 
-        await PoidsService.AddEntryAsync(entry);
+         await PoidsService.AddEntryAsync(entry);
+               
         data = await PoidsService.GetEntriesAsync();
+        exercices = data.Select(e => e.Exercice).Distinct().OrderBy(x => x).ToList();
         UpdateDates();
         message = "Entrée enregistrée ✅";
     }
@@ -206,13 +217,13 @@
 
     async Task DeleteExercice()
     {
-        await PoidsService.RemoveExerciceAsync(selectedExerciceToDelete);
         exercices.Remove(selectedExerciceToDelete);
-        await PoidsService.SaveExercicesAsync(exercices);
-        data = await PoidsService.GetEntriesAsync();
-        UpdateDates();
-        message = $"Exercice supprimé : {selectedExerciceToDelete}";
+        await PoidsService.SaveExercicesAsync(exercices); // sauvegarde la liste mise à jour
+
+        selectedExerciceToDelete = exercices.FirstOrDefault() ?? "";
+        message = $"Exercice supprimé de la liste déroulante : {selectedExerciceToDelete}";
     }
+
 
     async Task DeleteDate()
     {

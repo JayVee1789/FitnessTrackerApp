@@ -2,52 +2,72 @@
 @using FitnessTrackerApp.Models
 @inject SupabaseService SupabaseService
 
-<h3>Créer un programme de musculation</h3>
+<div class="container py-5">
+    <h2 class="fw-bold mb-4 text-center">Programme à suivre 🏋️</h2>
 
-<div class="mb-3">
-    <label class="form-label">Date de début</label>
-    <input class="form-control" type="date" @bind="dateDebut" />
-</div>
-
-<div class="mb-3">
-    <label class="form-label">Nom du programme</label>
-    <input class="form-control" @bind="programmeNom" />
-</div>
-
-<div class="mb-3">
-    <label class="form-label">Liste des exercices</label>
-    <textarea class="form-control" rows="5" @bind="programmeContenu" placeholder="Ex: Lundi: Développé couché..."></textarea>
-</div>
-
-<button class="btn btn-primary" @onclick="AjouterProgramme">Ajouter</button>
-
-<hr />
-
-<h4>Programmes disponibles</h4>
-
-@if (programmes.Count == 0)
-{
-    <p>Aucun programme enregistré.</p>
-}
-else
-{
-    if (!string.IsNullOrEmpty(message))
+    @if (!string.IsNullOrEmpty(message))
     {
-        <div class="alert @alertClass">@message</div>
+        <div class="alert @alertClass text-center">@message</div>
     }
-    <ul class="list-group">
-        @foreach (var p in programmes)
+    <div class="d-flex justify-content-center gap-3 mt-4">
+        <button class="btn btn-outline-primary" @onclick="ExporterVersSupabase">📤 Exporter vers Supabase</button>
+        <button class="btn btn-outline-secondary" @onclick="ImporterDepuisSupabase">📥 Importer depuis Supabase</button>
+    </div>
+    <div class="card shadow-sm p-4 mb-5">
+        <h5 class="mb-3">Nouveau programme</h5>
+
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">Date de début</label>
+                <input type="date" class="form-control" @bind="dateDebut" />
+            </div>
+
+            <div class="col-md-8">
+                <label class="form-label">Nom du programme</label>
+                <input class="form-control" @bind="programmeNom" placeholder="Ex: Split 4 jours" />
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Contenu</label>
+                <textarea class="form-control" rows="4" @bind="programmeContenu"
+                          placeholder="Ex: Lundi: Développé couché, Dips..."></textarea>
+            </div>
+        </div>
+
+        <button class="btn btn-primary w-100 mt-4" @onclick="AjouterProgramme">📦 Ajouter le programme</button>
+    </div>
+
+    <div class="card shadow-sm p-4">
+        <h5 class="mb-4">📋 Programmes enregistrés</h5>
+
+        @if (programmes.Count == 0)
         {
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div>
-                    <strong>@p.Nom</strong> - <em>@p.DateDebut.ToString("dd MMM yyyy")</em><br />
-                    <pre>@p.Contenu</pre>
-                </div>
-                <button class="btn btn-sm btn-outline-danger" @onclick="@(() => SupprimerProgramme(p.Id))">🗑</button>
-            </li>
+            <div class="text-muted text-center">Aucun programme pour l’instant.</div>
         }
-    </ul>
-}
+        else
+        {
+            
+            <ul class="list-group">
+               
+                @foreach (var p in programmes)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-start flex-wrap">
+                        <div class="me-3 flex-grow-1">
+                            <div class="fw-bold">@p.Nom</div>
+                            <div class="text-muted mb-2">@p.DateDebut.ToString("dd MMM yyyy")</div>
+                            <pre class="small bg-light p-2 rounded">@p.Contenu</pre>
+                        </div>
+                        <button class="btn btn-sm btn-outline-danger mt-2"
+                                @onclick="@(() => SupprimerProgramme(p.Id))">
+                            🗑 Supprimer
+                        </button>
+                    </li>
+                }
+            </ul>
+
+        }
+    </div>
+</div>
 
 @code {
     string programmeNom = "";
@@ -56,6 +76,7 @@ else
     List<ProgrammeModel> programmes = new();
     string message = "";
     string alertClass = "";
+
     protected override async Task OnInitializedAsync()
     {
         programmes = await SupabaseService.GetProgrammesAsync();
@@ -70,18 +91,16 @@ else
                 Contenu = programmeContenu,
                 DateDebut = dateDebut
             };
-       
+
         var success = await SupabaseService.AddProgrammeAsync(p);
-       
+
         if (success)
         {
             message = "✅ Programme enregistré avec succès.";
             alertClass = "alert-success";
-
             programmeNom = "";
             programmeContenu = "";
             dateDebut = DateTime.Today;
-
             programmes = await SupabaseService.GetProgrammesAsync();
         }
         else
@@ -89,7 +108,6 @@ else
             message = "❌ Échec de l'enregistrement.";
             alertClass = "alert-danger";
         }
-
     }
 
     async Task SupprimerProgramme(Guid id)
@@ -98,7 +116,7 @@ else
 
         if (success)
         {
-            programmes = await SupabaseService.GetProgrammesAsync(); // 🔁 recharge
+            programmes = await SupabaseService.GetProgrammesAsync();
             message = "✅ Programme supprimé.";
             alertClass = "alert-warning";
         }
@@ -107,5 +125,30 @@ else
             message = "❌ Échec de la suppression.";
             alertClass = "alert-danger";
         }
+    }
+    async Task ExporterVersSupabase()
+    {
+        int ajoutés = 0;
+        var remote = await SupabaseService.GetProgrammesAsync();
+
+        foreach (var p in programmes)
+        {
+            var existeDeja = remote.Any(x => x.Nom == p.Nom && x.DateDebut.Date == p.DateDebut.Date);
+            if (!existeDeja)
+            {
+                await SupabaseService.AddProgrammeAsync(p);
+                ajoutés++;
+            }
+        }
+
+        message = $"📤 Export terminé. {ajoutés} programme(s) exporté(s) vers Supabase.";
+        alertClass = "alert-info";
+    }
+
+    async Task ImporterDepuisSupabase()
+    {
+        programmes = await SupabaseService.GetProgrammesAsync();
+        message = $"📥 Import depuis Supabase : {programmes.Count} programme(s) chargé(s).";
+        alertClass = "alert-success";
     }
 }
