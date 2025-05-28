@@ -35,4 +35,4 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           app_location: "."                  
-          output_location: "build/wwwroot"
+          output_location: "bin/Release/net8.0/wwwroot" 
