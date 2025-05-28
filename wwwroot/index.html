@@ -88,6 +88,30 @@
             });
         };
     </script>
+    <script>
+        let newWorker;
+
+        navigator.serviceWorker?.addEventListener('controllerchange', () => {
+            window.location.reload();
+        });
+
+        window.checkForServiceWorkerUpdate = async () => {
+            if (!navigator.serviceWorker) return false;
+
+            const registration = await navigator.serviceWorker.getRegistration();
+            if (registration?.waiting) {
+                newWorker = registration.waiting;
+                return true;
+            }
+            return false;
+        };
+
+        window.applyServiceWorkerUpdate = () => {
+            if (newWorker) {
+                newWorker.postMessage({ type: 'SKIP_WAITING' });
+            }
+        };
+    </script>
 </body>
 
 </html>

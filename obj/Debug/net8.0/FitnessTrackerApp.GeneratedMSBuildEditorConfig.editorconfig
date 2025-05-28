@@ -40,6 +40,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZ3JhbW1lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/jvere/source/repos/FitnessTrackerApp/FitnessTrackerApp/Pages/Shared/AppUpdate.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXEFwcFVwZGF0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/jvere/source/repos/FitnessTrackerApp/FitnessTrackerApp/Pages/Shared/ServiceWorkerUpdate.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXFNlcnZpY2VXb3JrZXJVcGRhdGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 

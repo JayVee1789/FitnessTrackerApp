@@ -1,0 +1,23 @@
+﻿@inject IJSRuntime JS
+
+@if (updateAvailable)
+{
+    <div class="update-notice">
+        Nouvelle version disponible !
+        <button class="btn btn-primary" @onclick="ApplyUpdate">Mettre à jour</button>
+    </div>
+}
+
+@code {
+    private bool updateAvailable = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        updateAvailable = await JS.InvokeAsync<bool>("checkForServiceWorkerUpdate");
+    }
+
+    private async Task ApplyUpdate()
+    {
+        await JS.InvokeVoidAsync("applyServiceWorkerUpdate");
+    }
+}
