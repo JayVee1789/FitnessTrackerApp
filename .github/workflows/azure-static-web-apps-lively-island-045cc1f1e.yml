@@ -28,10 +28,9 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "FitnessTrackerApp"
-          output_location: "FitnessTrackerApp/bin/Release/net8.0/wwwroot"
-          app_build_command: "dotnet publish FitnessTrackerApp/FitnessTrackerApp.csproj -c Release"
-
+          app_location: "."  # Le projet Blazor est dans le répertoire racine du repo
+          output_location: "bin/Release/net8.0/wwwroot"
+          app_build_command: "dotnet publish -c Release"
 
           ###### End of Repository/Build Configurations ######
 
