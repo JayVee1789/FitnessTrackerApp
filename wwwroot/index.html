@@ -31,6 +31,28 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
+    <script>
+        window.checkForUpdate = (dotnetHelper) => {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistration().then(reg => {
+                    if (reg) {
+                        reg.onupdatefound = () => {
+                            const newWorker = reg.installing;
+                            newWorker.onstatechange = () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    dotnetHelper.invokeMethodAsync('ShowUpdatePrompt');
+                                }
+                            };
+                        };
+                    }
+                });
+            }
+        };
+
+        window.locationReload = () => {
+            window.location.reload(true);
+        };
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         window.drawLineChart = (canvasId, labels, data) => {

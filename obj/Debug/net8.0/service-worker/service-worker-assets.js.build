@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "9omkgOdc",
+  "version": "2JBafzVs",
   "assets": [
     {
       "hash": "sha256-UaTfkDpvZOge31vrSpAql7gjx6rHLEjlvaCenzCzvXI=",
@@ -10,11 +10,11 @@ self.assetsManifest = {
       "url": "_framework/Blazored.LocalStorage.wasm"
     },
     {
-      "hash": "sha256-yhXnpfGKj4tatg4NjOw0mhEkvHKVm9iKky0XFMM7o5g=",
+      "hash": "sha256-ugfCpMJf44N5N0cGTWwiP2ljtj296FbndACOHgtm58o=",
       "url": "_framework/FitnessTrackerApp.pdb"
     },
     {
-      "hash": "sha256-BGPuPzJFoMSRCIUwhxJloqCLxLFppZFf69Nmlg7pbZ4=",
+      "hash": "sha256-Z5jOXVKNKTDgAlFsEO+O1BU8ODER00JUUXlPN0CJWa4=",
       "url": "_framework/FitnessTrackerApp.wasm"
     },
     {
@@ -790,7 +790,7 @@ self.assetsManifest = {
       "url": "_framework/WindowsBase.wasm"
     },
     {
-      "hash": "sha256-N8zK8eJeoiUKqsOGszuOpgtF9cbE9OLi9/CSMRX+VGU=",
+      "hash": "sha256-d7AENNSUI/RaKZ3sxWpf4T/wyPnsGh6atbIZOVJoQxs=",
       "url": "_framework/blazor.boot.json"
     },
     {
@@ -870,7 +870,7 @@ self.assetsManifest = {
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-S/63qbTRsWeObTl4vjtEO1IpMlu6w0vuqEAizCmd+NE=",
+      "hash": "sha256-Odv54LB5aifMZeF+PPP8IrGDdn/JU5ZIa/wc+uG5erc=",
       "url": "index.html"
     },
     {

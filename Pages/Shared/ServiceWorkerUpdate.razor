@@ -1,0 +1,33 @@
+﻿@inject IJSRuntime JSRuntime
+
+@if (updateAvailable)
+{
+    <div class="alert alert-warning d-flex justify-content-between align-items-center">
+        <span>Une nouvelle version est disponible.</span>
+        <button class="btn btn-sm btn-primary" @onclick="Reload">Recharger</button>
+    </div>
+}
+
+@code {
+    private bool updateAvailable;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("checkForUpdate", DotNetObjectReference.Create(this));
+        }
+    }
+
+    [JSInvokable]
+    public void ShowUpdatePrompt()
+    {
+        updateAvailable = true;
+        StateHasChanged();
+    }
+
+    private async Task Reload()
+    {
+        await JSRuntime.InvokeVoidAsync("locationReload");
+    }
+}

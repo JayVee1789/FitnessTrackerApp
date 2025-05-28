@@ -1069,6 +1069,6 @@ C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\bin\Debug\net8.0
 C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\bin\Debug\net8.0\release\FitnessTrackerApp.staticwebassets.endpoints.json
 C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\bin\Debug\net8.0\release\wwwroot\sample-data\weather.json
 C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\bin\Debug\net8.0\release\wwwroot\_framework\blazor.boot.json
-C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\compressed\gq23cpgzt7-0bn0zpigf1.gz
-C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\compressed\zwcito1gfe-qgvqc6t70m.gz
-C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\compressed\g0iz73sqj2-vazihq3b3m.gz
+C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\compressed\gq23cpgzt7-ltjpbvved9.gz
+C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\compressed\zwcito1gfe-e7nlr5v26h.gz
+C:\Users\jvere\source\repos\FitnessTrackerApp\FitnessTrackerApp\obj\Debug\net8.0\compressed\g0iz73sqj2-r3rduedd4p.gz
