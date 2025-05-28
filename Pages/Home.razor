@@ -14,7 +14,18 @@
     }
 
     <div class="card shadow-sm p-4 mb-5">
-        <h5 class="mb-3">Ajouter une séance</h5>
+        <div class="row g-3">
+            <h5 class="mb-3">Ajouter un exercice à la liste</h5>
+            <div class="col-md-4">
+                <label class="form-label">Nouveau exercice</label>
+                <input class="form-control" placeholder="ex: Tractions" @bind="newExercice" />
+            </div>
+
+            <div class="col-md-4 d-flex align-items-end">
+                <button class="btn btn-outline-dark w-100" @onclick="AddExercice">➕ Ajouter</button>
+            </div>
+        </div>
+        <h5 style="margin:15px 15px 15px 15px" class="mb-3">Ajouter une séance</h5>
 
         <div class="row g-3">
             <div class="col-md-4">
@@ -27,14 +38,7 @@
                 </select>
             </div>
 
-            <div class="col-md-4">
-                <label class="form-label">Nouveau exercice</label>
-                <input class="form-control" placeholder="ex: Tractions" @bind="newExercice" />
-            </div>
-
-            <div class="col-md-4 d-flex align-items-end">
-                <button class="btn btn-outline-dark w-100" @onclick="AddExercice">➕ Ajouter</button>
-            </div>
+           
 
             <div class="col-md-4">
                 <label class="form-label">Date</label>
