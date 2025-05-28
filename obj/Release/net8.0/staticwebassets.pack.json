@@ -1,0 +1,69 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\bin\\Release\\net8.0\\wwwroot\\_framework\\blazor.webassembly.js",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js"
+    },
+    {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\obj\\Release\\net8.0\\scopedcss\\bundle\\FitnessTrackerApp.styles.css",
+      "PackagePath": "staticwebassets\\FitnessTrackerApp.styles.css"
+    },
+    {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\icon-192.png",
+      "PackagePath": "staticwebassets\\icon-192.png"
+    },
+    {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\icon-512.png",
+      "PackagePath": "staticwebassets\\icon-512.png"
+    },
+    {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\manifest.webmanifest",
+      "PackagePath": "staticwebassets\\manifest.webmanifest"
+    },
+    {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\sample-data\\weather.json",
+      "PackagePath": "staticwebassets\\sample-data\\weather.json"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.FitnessTrackerApp.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.FitnessTrackerApp.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.build.FitnessTrackerApp.props",
+      "PackagePath": "build\\FitnessTrackerApp.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.FitnessTrackerApp.props",
+      "PackagePath": "buildMultiTargeting\\FitnessTrackerApp.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildTransitive.FitnessTrackerApp.props",
+      "PackagePath": "buildTransitive\\FitnessTrackerApp.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
