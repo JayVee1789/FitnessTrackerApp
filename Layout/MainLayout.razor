@@ -1,13 +1,41 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+@inject UpdateService UpdateService
 
+<div class="page">
+    <NavMenu />
     <main>
-        
         <article class="container py-4">
             @Body
         </article>
     </main>
 </div>
+
+
+
+@if (updateAvailable)
+{
+    <div style="position: fixed; bottom: 10px; left: 10px; background: black; color: white; padding: 10px; border-radius: 5px;">
+        Nouvelle version disponible.
+        <button @onclick="ReloadApp" style="margin-left: 10px;">🔁 Recharger</button>
+    </div>
+}
+
+@code {
+    private bool updateAvailable = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        UpdateService.OnUpdateAvailable += () =>
+        {
+            updateAvailable = true;
+            InvokeAsync(StateHasChanged);
+        };
+
+        await UpdateService.RegisterAsync();
+    }
+
+    private async Task ReloadApp()
+    {
+        await UpdateService.ReloadAsync();
+    }
+}

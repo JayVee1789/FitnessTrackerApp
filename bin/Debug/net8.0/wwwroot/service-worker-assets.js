@@ -1,8 +1,8 @@
 self.assetsManifest = {
-  "version": "sqU49EQ3",
+  "version": "2nmCW1Q5",
   "assets": [
     {
-      "hash": "sha256-UaTfkDpvZOge31vrSpAql7gjx6rHLEjlvaCenzCzvXI=",
+      "hash": "sha256-8H08bdCfpcgyvMWdmt/9ujpgJ9PMBU10vXtO3GNgKfY=",
       "url": "FitnessTrackerApp.styles.css"
     },
     {
@@ -10,11 +10,11 @@ self.assetsManifest = {
       "url": "_framework/Blazored.LocalStorage.wasm"
     },
     {
-      "hash": "sha256-8elEpIopYEnhKkJ1FcE9XiQzoUyJaqVTy6ibaG4RNo4=",
+      "hash": "sha256-Xc9TkMrvyo+YNbEonGZ8+IaThc+8FYFVWZdX2TC0Wr0=",
       "url": "_framework/FitnessTrackerApp.pdb"
     },
     {
-      "hash": "sha256-XiU2MfkJFbd2TtNTicA41I3i+ZsgYfn0csj17SC5cJ0=",
+      "hash": "sha256-Rx4DR8CQ22TbkUw8HrM2kg1BEvyLoclszvu+grj1L2A=",
       "url": "_framework/FitnessTrackerApp.wasm"
     },
     {
@@ -790,7 +790,7 @@ self.assetsManifest = {
       "url": "_framework/WindowsBase.wasm"
     },
     {
-      "hash": "sha256-imEG6fi7dnXFKqKfmu3J7gp+dUD+XJhhGnJrV/sxFMk=",
+      "hash": "sha256-zn6GJRLBsicB8lUNyS/grulCuHaylKF1UYM2995Aj1I=",
       "url": "_framework/blazor.boot.json"
     },
     {
@@ -846,7 +846,7 @@ self.assetsManifest = {
       "url": "_framework/netstandard.wasm"
     },
     {
-      "hash": "sha256-9B8YS3zaiXmz5Go6OVZeyHRLwruNA28zmVAcLq1h+Fw=",
+      "hash": "sha256-PFdrnsXmrt3pGTaYpynKONcG9u0u0yGqMSfMOg1Vbio=",
       "url": "css/app.css"
     },
     {
@@ -870,16 +870,32 @@ self.assetsManifest = {
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-2/QLQU8jGwfqVq9+VmM241+1++UDiiQ2ySCmOe4p3Ys=",
+      "hash": "sha256-Ge5CHMWgzXad9aiIwU7gy3ttYWsbwtqaHAwV+6WGmkM=",
       "url": "index.html"
     },
     {
-      "hash": "sha256-B1vgFWskxSCHrod/w20nmaUjvQd0Fl52WgYIuyR3dJA=",
+      "hash": "sha256-Ck0SWvzr0rEarQ6WAPv2S4nhFagw1hcqKCm8kRVRKeM=",
+      "url": "logoIcone192.png"
+    },
+    {
+      "hash": "sha256-MbEVE1LIYejU/FpVGxcHuc/0C+p8LeeI+d8CRlexG3k=",
+      "url": "logoIconeOf.png"
+    },
+    {
+      "hash": "sha256-sGYD29vhr0QuxSTl8jQOoh792hFenuEoqkOZ2RfwBj0=",
       "url": "manifest.webmanifest"
     },
     {
       "hash": "sha256-enKgCMkYmCpfEcmg6Annbmc40VZ/A6aYYSQjZfVn2cU=",
       "url": "sample-data/weather.json"
+    },
+    {
+      "hash": "sha256-7jDRriv8+rUZIcnvAZZqH+eRCX1Hn8GaWeThpmYZ6A4=",
+      "url": "settings.json"
+    },
+    {
+      "hash": "sha256-O4tAX/i99LPFT60v20yT3j7Nr5swE7UzKWeF9nF+VF4=",
+      "url": "updateService.js"
     }
   ]
 };

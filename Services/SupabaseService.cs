@@ -3,6 +3,7 @@ using FitnessTrackerApp.Models;
 using FitnessTrackerApp.Models;
 using System.Diagnostics;
 using System.Net.Http.Json;
+using System.Runtime;
 using System.Text.Json;
 
 public class SupabaseService
@@ -11,18 +12,31 @@ public class SupabaseService
     private readonly string _tableUrl;
     private readonly string _apiKey;
     private readonly string _programmeUrl;
-    public SupabaseService(HttpClient http)
+    private readonly SupabaseSettings _settings;
+    public SupabaseService(HttpClient http, SupabaseSettings settings)
     {
-
         _http = http;
+        _settings = settings;
 
-        _apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2c2hhcGRsd3p6eXRwbXZnbWliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgxMDg5NjEsImV4cCI6MjA2MzY4NDk2MX0.DKx7CvWsfo9b5V6-vShqHXU1eNrvYXYDP26uOtEghCc"; // À récupérer dans Supabase > Project Settings > API > anon key
-        _tableUrl = "https://zvshapdlwzzytpmvgmib.supabase.co/rest/v1/entries"; // Voir dans Supabase > API > REST
-        _programmeUrl = "https://zvshapdlwzzytpmvgmib.supabase.co/rest/v1/programmes";
-        _http.DefaultRequestHeaders.Add("apikey", _apiKey);
-        _http.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiKey}");
+        _http.DefaultRequestHeaders.Add("apikey", _settings.SupabaseApiKey);
+        _http.DefaultRequestHeaders.Add("Authorization", $"Bearer {_settings.SupabaseApiKey}");
 
+        _tableUrl = _settings.SupabaseEntriesUrl;
+        _programmeUrl = _settings.SupabaseProgrammesUrl;
     }
+    //public SupabaseService(HttpClient http)
+    //{
+
+    //    _http = http;
+
+
+    //    _apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2c2hhcGRsd3p6eXRwbXZnbWliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgxMDg5NjEsImV4cCI6MjA2MzY4NDk2MX0.DKx7CvWsfo9b5V6-vShqHXU1eNrvYXYDP26uOtEghCc"; // À récupérer dans Supabase > Project Settings > API > anon key
+    //    _tableUrl = "https://zvshapdlwzzytpmvgmib.supabase.co/rest/v1/entries"; // Voir dans Supabase > API > REST
+    //    _programmeUrl = "https://zvshapdlwzzytpmvgmib.supabase.co/rest/v1/programmes";
+    //    _http.DefaultRequestHeaders.Add("apikey", _apiKey);
+    //    _http.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiKey}");
+
+    //}
 
     public async Task<List<PoidsEntry>> GetEntriesAsync()
     {
@@ -98,4 +112,5 @@ public class SupabaseService
 
         return response.IsSuccessStatusCode;
     }
+   
 }

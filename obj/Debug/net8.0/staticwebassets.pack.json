@@ -37,12 +37,28 @@
       "PackagePath": "staticwebassets\\index.html"
     },
     {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\logoIcone192.png",
+      "PackagePath": "staticwebassets\\logoIcone192.png"
+    },
+    {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\logoIconeOf.png",
+      "PackagePath": "staticwebassets\\logoIconeOf.png"
+    },
+    {
       "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\manifest.webmanifest",
       "PackagePath": "staticwebassets\\manifest.webmanifest"
     },
     {
       "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\sample-data\\weather.json",
       "PackagePath": "staticwebassets\\sample-data\\weather.json"
+    },
+    {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\settings.json",
+      "PackagePath": "staticwebassets\\settings.json"
+    },
+    {
+      "Id": "C:\\Users\\jvere\\source\\repos\\FitnessTrackerApp\\FitnessTrackerApp\\wwwroot\\updateService.js",
+      "PackagePath": "staticwebassets\\updateService.js"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.FitnessTrackerApp.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",

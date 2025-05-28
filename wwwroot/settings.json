@@ -1,0 +1,6 @@
+{
+  "supabaseApiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2c2hhcGRsd3p6eXRwbXZnbWliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgxMDg5NjEsImV4cCI6MjA2MzY4NDk2MX0.DKx7CvWsfo9b5V6-vShqHXU1eNrvYXYDP26uOtEghCc",
+  "supabaseEntriesUrl": "https://zvshapdlwzzytpmvgmib.supabase.co/rest/v1/entries",
+  "supabaseProgrammesUrl": "https://zvshapdlwzzytpmvgmib.supabase.co/rest/v1/programmes"
+}
+
